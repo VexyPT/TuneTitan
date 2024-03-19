@@ -241,26 +241,29 @@ export class ExtendedClient<Ready extends boolean = boolean> extends Client<Read
             .on("nodeConnect", () => console.log(ck.green("Socket connection has been established.")))
             .on("error", (node, error) => console.log(console.log(`Node "${node.identifier}" encontrou um erro: ${error}.`)))
             .on("trackStart", (player, track) => {
+
                 const timestamp = track.duration / 1000;
                 const hours = Math.floor(timestamp / 60 / 60);
                 const minutes = Math.floor(timestamp / 60) - (hours * 60);
                 const seconds = timestamp % 60;
                 const formatted = hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
-
+                
                 const channel = client.channels.cache.get(player.textChannelId!);
                 (channel as TextChannel).send({
                     embeds:
                         [{
                             title: `${formatEmoji(settings.emojis.animated.musicBeat, true)} Tocando agora:`,
-                            description: `[${track.title}](${track.uri})\n${formatEmoji(settings.emojis.animated.discMusic, true)} \`${formatted || "LIVE"}\`\n\nRequisitado por: ${(track.requester as never | string).toString()}`,
+                            description: `[${track.title}](${track.uri})\n${formatEmoji(settings.emojis.animated.discMusic, true)} Duração: \`${formatted || "LIVE"}\`\n\nRequisitado por: ${(track.requester as never | string).toString()}`,
                             thumbnail: { url: track.thumbnail! },
                             color: hexToRgb(settings.colors.theme.blurple),}]
                 });
             })
             .on("queueEnd", player => {
-                const channel = client.channels.cache.get(player.textChannelId!) as TextChannel;
-                channel.send({ embeds: [{ description: "Fim da playlist, saindo do canal de voz.", color: Colors.Green }] });
-                player.destroy();
+                setTimeout(() => {
+                    const channel = client.channels.cache.get(player.textChannelId!) as TextChannel;
+                    channel.send({ embeds: [{ description: "Nenhuma música foi iniciada durante `3` minutos, saindo do canal de voz.", color: Colors.Green }] });
+                    player.destroy();
+                },180_000);
             });
         }
 
