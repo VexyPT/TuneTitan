@@ -8,11 +8,19 @@
       "primary": "#3b82f6",
       "secondary": "#4f545c",
       "warning": "#fbbd23",
-      "magic": "#c026d3"
+      "magic": "#c026d3",
+      "blurple": "#5865f2"
     }
   },
   "emojis": {
-    "musicBeat": "<a:musicbeat:1219624420390469762>",
-    "discMusic": "<a:Discmusic:1219624424706281583>"
+    "static": {
+      "check": "1219633572676108358",
+      "error": "1219633574475468942",
+      "warning": "1219633571233398844"
+    },
+    "animated": {
+      "musicBeat": "1219624420390469762",
+      "discMusic": "1219624424706281583"
+    }
   }
 }
