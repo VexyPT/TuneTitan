@@ -3,7 +3,7 @@ import { ApplicationCommandType } from "discord.js";
 
 export default new Command({
     name: "ping",
-    description: "[📜 Common] Veja a ping do client.",
+    description: "[📜 Common] Veja a ping da API.",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
     async run({ interaction, client }){
