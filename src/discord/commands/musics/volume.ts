@@ -45,6 +45,7 @@ export default new Command({
             guildId: interaction.guild?.id,
             volume: volume
         });
+        
         interaction.editReply({
             embeds:
                 [{
