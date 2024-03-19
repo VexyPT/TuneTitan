@@ -4,8 +4,8 @@ import { join } from "node:path";
 import { Command } from "./Command";
 import { Component } from "./Components";
 import { Event } from "./Event";
-import { processEnv } from "@/settings";
-import { brBuilder } from "@/functions";
+import { processEnv, settings } from "@/settings";
+import { brBuilder, hexToRgb } from "@/functions";
 import ck from "chalk";
 import { Vulkava } from "vulkava";
 
@@ -242,22 +242,21 @@ export class ExtendedClient<Ready extends boolean = boolean> extends Client<Read
                 const hours = Math.floor(timestamp / 60 / 60);
                 const minutes = Math.floor(timestamp / 60) - (hours * 60);
                 const seconds = timestamp % 60;
-
                 const formatted = hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
 
                 const channel = client.channels.cache.get(player.textChannelId!);
                 (channel as TextChannel).send({
                     embeds:
                         [{
-                            title: "✅ Tocando agora:",
-                            description: `[${track.title}](${track.uri})\n[\`${formatted || "LIVE"}\`]\n\nRequisitado por: ${(track.requester as never | string).toString()}`,
+                            title: `${settings.emojis.animated.musicBeat} Tocando agora:`,
+                            description: `[${track.title}](${track.uri})\n${settings.emojis.animated.discMusic} \`${formatted || "LIVE"}\`\n\nRequisitado por: ${(track.requester as never | string).toString()}`,
                             thumbnail: { url: track.thumbnail! },
-                            color: Colors.Green,}]
+                            color: hexToRgb(settings.colors.theme.blurple),}]
                 });
             })
             .on("queueEnd", player => {
                 const channel = client.channels.cache.get(player.textChannelId!) as TextChannel;
-                channel.send({ embeds: [{ description: "✅ Fim da playlist, saindo do canal de voz.", color: Colors.Green }] });
+                channel.send({ embeds: [{ description: "Fim da playlist, saindo do canal de voz.", color: Colors.Green }] });
                 player.destroy();
             });
         }
