@@ -12,7 +12,7 @@ class PresenceManager {
     const options = [
       {
         type: ActivityType.Listening,
-        text: `🎵 ${this.client.users.cache.size} Usuários.`,
+        text: `${this.client.users.cache.size} Usuários.`,
         status: "online"
       },
       {
