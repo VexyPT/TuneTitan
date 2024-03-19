@@ -3,7 +3,7 @@ import { ApplicationCommandType, Colors, GuildMember, VoiceState } from "discord
 
 export default new Command({
     name: "pause",
-    description: "[🎵 Música] Pausar uma música.",
+    description: "[🎵 Música] Pause a música.",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
 
