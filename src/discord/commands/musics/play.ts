@@ -1,5 +1,7 @@
 import { Command } from "@discord/base";
-import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType, formatEmoji } from "discord.js";
+import { settings } from "@/settings";
+import { hexToRgb } from "@/functions";
 
 export default new Command({
     name: "play",
@@ -9,7 +11,7 @@ export default new Command({
     options: [
         {
             name: "música",
-            description: "Selecione uma música",
+            description: "Selecione uma música ou playlist",
             type: ApplicationCommandOptionType.String,
             required: true,
             autocomplete: true
@@ -52,14 +54,15 @@ export default new Command({
         const voiceState = interaction.member.voice;
 
         if (!voiceState || !voiceState.channelId) {
-            await interaction.editReply("Entra algum canal de voz primeiro.");
+            await interaction.editReply({ embeds: [{ description: `${formatEmoji(settings.emojis.static.warning)} Entre em um canal de voz primeiro.`}]});
             return;
         }
 
         if (res?.loadType === "LOAD_FAILED") {
-            return interaction.editReply(`Ocorreu um erro: ${res.exception?.message}`);
+            console.log(`Ocorreu um erro no /play: ${res.exception?.message}`);
+            return interaction.editReply({ embeds: [{ description: `${formatEmoji(settings.emojis.static.error)} Ocorreu um erro, por favor tente novamente, se percistir o erro será enviado automaticamente para a nossa equipe.`}] });
         } else if (res?.loadType === "NO_MATCHES") {
-            return interaction.editReply("Sem matches!");
+            return interaction.editReply({ embeds: [{ description: `${formatEmoji(settings.emojis.static.error)} Não foi encontrada nenhuma música com esse nome!`}] });
         }
 
         const player = client.vulkava?.createPlayer({
@@ -76,13 +79,32 @@ export default new Command({
                 track.setRequester(interaction.user);
                 player?.queue.add(track);
             }
-            interaction.editReply(`Playlist \`${res.playlistInfo.name}\` carregada!`);
+
+                const timestamp = res.playlistInfo.duration / 1000;
+                const hours = Math.floor(timestamp / 60 / 60);
+                const minutes = Math.floor(timestamp / 60) - (hours * 60);
+                const seconds = timestamp % 60;
+                const secondsFormatted = seconds.toFixed(0);
+                const formatted = hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0") + ":" + secondsFormatted.toString().padStart(2, "0");
+
+            interaction.editReply({
+                embeds: [{
+                    title: `Playlist Carregada: ${res.playlistInfo.name}`,
+                    description: `Musicas: \`${res.tracks.length}\`\nDuração: \`${formatted}\``,
+                    color: hexToRgb(settings.colors.theme.blurple),
+                }]
+            });
         } else {
             const track = res?.tracks[0];
             track?.setRequester(interaction.user);
 
             player?.queue.add(track!);
-            interaction.editReply(`Na fila \`${track?.title} - ${player?.queue.size}\``);
+            interaction.editReply({
+                embeds: [{
+                    color: hexToRgb(settings.colors.theme.blurple),
+                    description: `${player!.queue.size <= 1 ? `Adicionado a fila [${track?.title}](${track?.uri}) por \`${track?.author}\`` : `Adicionado à fila na posição \`${player?.queue.size}\`, [${track?.title}](${track?.uri}) por \`${track?.author}\``}`
+                }]
+            });
         }
         if (!player?.playing) player?.play();
     },
