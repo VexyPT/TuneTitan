@@ -79,18 +79,18 @@ export default new Command({
                 track.setRequester(interaction.user);
                 player?.queue.add(track);
             }
-
-                const timestamp = res.playlistInfo.duration / 1000;
-                const hours = Math.floor(timestamp / 60 / 60);
-                const minutes = Math.floor(timestamp / 60) - (hours * 60);
-                const seconds = timestamp % 60;
-                const secondsFormatted = seconds.toFixed(0);
-                const formatted = hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0") + ":" + secondsFormatted.toString().padStart(2, "0");
+            
+            const timestamp = res.playlistInfo.duration / 1000;
+            const hours = Math.floor(timestamp / 60 / 60);
+            const minutes = Math.floor(timestamp / 60) - (hours * 60);
+            const seconds = timestamp % 60;
+            const secondsFormatted = seconds.toFixed(0);
+            const formatted = hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0") + ":" + secondsFormatted.toString().padStart(2, "0");
 
             interaction.editReply({
                 embeds: [{
                     title: `Playlist Carregada: ${res.playlistInfo.name}`,
-                    description: `Musicas: \`${res.tracks.length}\`\nDuração: \`${formatted}\``,
+                    description: `🎧 Musicas: \`${res.tracks.length}\`\n${formatEmoji(settings.emojis.animated.discMusic, true)} Duração: \`${formatted}\``,
                     color: hexToRgb(settings.colors.theme.blurple),
                 }]
             });
