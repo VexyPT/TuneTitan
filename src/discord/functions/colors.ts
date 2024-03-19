@@ -8,6 +8,7 @@ export class Colors {
       secondary: "#4f545c",
       warning: "#fbbd23",
       magic: "#c026d3",
+      blurple: "#5865f2"
     };
   }
   
