@@ -97,7 +97,7 @@ export default new Command({
         } else {
             const track = res?.tracks[0];
             track?.setRequester(interaction.user);
-
+           
             player?.queue.add(track!);
             interaction.editReply({
                 embeds: [{
