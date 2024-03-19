@@ -10,5 +10,9 @@
       "warning": "#fbbd23",
       "magic": "#c026d3"
     }
+  },
+  "emojis": {
+    "musicBeat": "<a:musicbeat:1219624420390469762>",
+    "discMusic": "<a:Discmusic:1219624424706281583>"
   }
 }
