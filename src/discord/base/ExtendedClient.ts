@@ -1,4 +1,7 @@
-import { ApplicationCommandType, AutocompleteInteraction, BitFieldResolvable, ChatInputCommandInteraction, Client, ClientEvents, Collection, Colors, CommandInteraction, ComponentType, DiscordAPIError, ErrorEvent, GatewayIntentsString, IntentsBitField, Interaction, InteractionType, MessageContextMenuCommandInteraction, Partials, TextChannel, UserContextMenuCommandInteraction, version } from "discord.js";
+import { ApplicationCommandType, AutocompleteInteraction, BitFieldResolvable,ChatInputCommandInteraction,
+    Client, Collection, Colors, CommandInteraction, ComponentType, DiscordAPIError, GatewayIntentsString,
+    IntentsBitField, Interaction, MessageContextMenuCommandInteraction, Partials, TextChannel,
+    UserContextMenuCommandInteraction, version, formatEmoji } from "discord.js";
 import { glob } from "glob";
 import { join } from "node:path";
 import { Command } from "./Command";
@@ -248,8 +251,8 @@ export class ExtendedClient<Ready extends boolean = boolean> extends Client<Read
                 (channel as TextChannel).send({
                     embeds:
                         [{
-                            title: `${settings.emojis.animated.musicBeat} Tocando agora:`,
-                            description: `[${track.title}](${track.uri})\n${settings.emojis.animated.discMusic} \`${formatted || "LIVE"}\`\n\nRequisitado por: ${(track.requester as never | string).toString()}`,
+                            title: `${formatEmoji(settings.emojis.animated.musicBeat, true)} Tocando agora:`,
+                            description: `[${track.title}](${track.uri})\n${formatEmoji(settings.emojis.animated.discMusic, true)} \`${formatted || "LIVE"}\`\n\nRequisitado por: ${(track.requester as never | string).toString()}`,
                             thumbnail: { url: track.thumbnail! },
                             color: hexToRgb(settings.colors.theme.blurple),}]
                 });
