@@ -2,7 +2,7 @@ import { Command } from "@discord/base";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
 
 export default new Command({
-    name: "tocar",
+    name: "play",
     description: "[🎵 Música] Tocar uma música.",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,

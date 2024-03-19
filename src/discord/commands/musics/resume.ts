@@ -2,7 +2,7 @@ import { Command } from "@discord/base";
 import { ApplicationCommandType, Colors, GuildMember, VoiceState } from "discord.js";
 
 export default new Command({
-    name: "resumo",
+    name: "resume",
     description: "[🎵 Música] Retornar a música.",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
