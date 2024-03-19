@@ -2,7 +2,7 @@ import { Command } from "@discord/base";
 import { ApplicationCommandType, Colors, GuildMember, VoiceState } from "discord.js";
 
 export default new Command({
-    name: "pausar",
+    name: "pause",
     description: "[🎵 Música] Pausar uma música.",
     dmPermission: false,
     type: ApplicationCommandType.ChatInput,
