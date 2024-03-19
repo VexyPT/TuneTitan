@@ -12,17 +12,17 @@ class PresenceManager {
     const options = [
       {
         type: ActivityType.Listening,
-        text: `Estou ajudando ${this.client.users.cache.size} membros no discord.`,
-        status: "dnd"
+        text: `🎵 ${this.client.users.cache.size} Usuários.`,
+        status: "online"
       },
       {
         type: ActivityType.Playing,
-        text: `Fui criada com intuito de alegrar seu dia.`,
-        status: "idle"
+        text: "🎧 Fui criado com intuito de alegrar seu dia.",
+        status: "online"
       },
       {
         type: ActivityType.Watching,
-        text: "Estou aqui por você!",
+        text: "⭐ Estou aqui por você!",
         status: "online"
       }
     ];
