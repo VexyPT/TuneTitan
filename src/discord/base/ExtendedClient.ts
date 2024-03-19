@@ -253,7 +253,7 @@ export class ExtendedClient<Ready extends boolean = boolean> extends Client<Read
                     embeds:
                         [{
                             title: `${formatEmoji(settings.emojis.animated.musicBeat, true)} Tocando agora:`,
-                            description: `[${track.title}](${track.uri})\n${formatEmoji(settings.emojis.animated.discMusic, true)} Duração: \`${formatted || "LIVE"}\`\n\nRequisitado por: ${(track.requester as never | string).toString()}`,
+                            description: `[${track.title}](${track.uri})\n${formatEmoji(settings.emojis.animated.discMusic, true)} Duração: \`${formatted || "LIVE"}\`\n\Pedido por: ${(track.requester as never | string).toString()}`,
                             thumbnail: { url: track.thumbnail! },
                             color: hexToRgb(settings.colors.theme.blurple),}]
                 });
