@@ -253,17 +253,21 @@ export class ExtendedClient<Ready extends boolean = boolean> extends Client<Read
                     embeds:
                         [{
                             title: `${formatEmoji(settings.emojis.animated.musicBeat, true)} Tocando agora:`,
-                            description: `[${track.title}](${track.uri})\n${formatEmoji(settings.emojis.animated.discMusic, true)} Duração: \`${formatted || "LIVE"}\`\n\Pedido por: ${(track.requester as never | string).toString()}`,
+                            description: `[${track.title}](${track.uri})\n\n${formatEmoji(settings.emojis.animated.discMusic, true)} Duração: \`${formatted || "LIVE"}\`\n\Pedido por: ${(track.requester as never | string).toString()}`,
                             thumbnail: { url: track.thumbnail! },
                             color: hexToRgb(settings.colors.theme.blurple),}]
                 });
             })
             .on("queueEnd", player => {
                 setTimeout(() => {
-                    const channel = client.channels.cache.get(player.textChannelId!) as TextChannel;
-                    channel.send({ embeds: [{ description: "Nenhuma música foi iniciada durante `3` minutos, saindo do canal de voz.", color: Colors.Green }] });
-                    player.destroy();
-                },180_000);
+                    if (player.playing) {
+                        return;
+                    } else {
+                        player.destroy();
+                        const channel = client.channels.cache.get(player.textChannelId!) as TextChannel;
+                        channel.send({ embeds: [{ description: "Nenhuma música foi iniciada durante `3` minutos, saindo do canal de voz.", color: Colors.Green }] });
+                    }
+                }, 180_000);
             });
         }
 
