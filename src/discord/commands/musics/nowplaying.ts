@@ -29,6 +29,7 @@ export default new Command({
         if (channel.id !== player.voiceChannelId) return interaction.editReply("Não estamos no mesmo canal de voz.");
         
         if (!player.playing) return interaction.editReply({ content: "Não está tocando nenhuma música no momento." });
+        
         const song = player.current;
         const timestamp = song!.duration / 1000;
         const hours = Math.floor(timestamp / 60 / 60);
