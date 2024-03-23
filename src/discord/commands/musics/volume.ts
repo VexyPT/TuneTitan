@@ -40,11 +40,7 @@ export default new Command({
             return interaction.editReply("O volume deve estar entre 0 e 150.");
         }
     
-        player.node?.send({
-            op: "volume",
-            guildId: interaction.guild?.id,
-            volume: volume
-        });
+        player.filters.setVolume(volume);
         
         interaction.editReply({
             embeds:
