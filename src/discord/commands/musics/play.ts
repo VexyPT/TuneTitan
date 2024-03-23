@@ -73,6 +73,11 @@ export default new Command({
         });
 
         player?.connect();
+        player?.node?.send({
+            op: "volume",
+            guildId: interaction.guild?.id,
+            volume: 50
+        });
 
         if (res?.loadType === "PLAYLIST_LOADED") {
             for (const track of res.tracks) {
