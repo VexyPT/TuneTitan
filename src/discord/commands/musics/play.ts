@@ -54,30 +54,23 @@ export default new Command({
         const voiceState = interaction.member.voice;
 
         if (!voiceState || !voiceState.channelId) {
-            await interaction.editReply({ embeds: [{ description: `${formatEmoji(settings.emojis.static.warning)} Entre em um canal de voz primeiro.`}]});
+            await interaction.editReply({ embeds: [{ description: `${formatEmoji(settings.emojis.static.error)} Entre em um canal de voz primeiro.`}]});
             return;
         }
 
         if (res?.loadType === "LOAD_FAILED") {
-            console.log(`Ocorreu um erro no /play: ${res.exception?.message}`);
-            return interaction.editReply({ embeds: [{ description: `${formatEmoji(settings.emojis.static.error)} Ocorreu um erro, por favor tente novamente, se percistir o erro será enviado automaticamente para a nossa equipe.`}] });
+            console.log(`Ocorreu um erro no /play: ${res.exception?.message} (provavelmente playlist nao encontrada)`);
+            return interaction.editReply({ embeds: [{ description: `${formatEmoji(settings.emojis.static.error)} Ocorreu um erro ao executar o comando, provavelmente você inseriu alguma playlist privada, ou alguma música que eu não tenho acesso, se você achar que isso é um erro, contacte a nossa [equipe](https://discord.gg/ADvbYjBf).`}] });
         } else if (res?.loadType === "NO_MATCHES") {
             return interaction.editReply({ embeds: [{ description: `${formatEmoji(settings.emojis.static.error)} Não foi encontrada nenhuma música com esse nome!`}] });
         }
-
         const player = client.vulkava?.createPlayer({
             guildId: interaction.guild?.id!,
             voiceChannelId: voiceState.channelId,
             textChannelId: interaction.channelId,
             selfDeaf: true
         });
-
         player?.connect();
-        player?.node?.send({
-            op: "volume",
-            guildId: interaction.guild?.id,
-            volume: 50
-        });
 
         if (res?.loadType === "PLAYLIST_LOADED") {
             for (const track of res.tracks) {
