@@ -37,12 +37,14 @@ export default new Command({
         const seconds = timestamp % 60;
         const secondsFormatted = seconds.toFixed(0);
         const formatted = hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0") + ":" + secondsFormatted.toString().padStart(2, "0");
+        
+
 
         await interaction.editReply({
             embeds: [{
-                // eslint-disable-next-line camelcase
+                // eslint-disable-next-line camelcase 
                 author: { name: "Tocando Agora:", icon_url: `${interaction.guild?.iconURL()}` },
-                description: `[${song?.title}](${song?.uri})\n\n> ⏰**・Duração:** \`${formatted}\` [<t:${song?.duration}:R>]\n> 💠**・Por:** \`${song?.author}\`\n> 🖐️**・Pedido por:** ${(song?.requester as never | string).toString()}\n> 🔊**・Volume:** \`${player?.volume}%\`\n> ♾️**・Modo 24/7:** \`Em breve\`\n> 🛜**・Canal de voz:** <#${player.voiceChannelId}>`,
+                description: `[${song?.title}](${song?.uri})\n\n> ⏰**・Duração:** \`${formatted}\`\n> 💠**・Por:** \`${song?.author}\`\n> 🖐️**・Pedido por:** ${(song?.requester as never | string).toString()}\n> 🔊**・Volume:** \`${player?.volume}%\`\n> ♾️**・Modo 24/7:** \`Em breve\`\n> 🛜**・Canal de voz:** <#${player.voiceChannelId}>`,
                 image: { url: `${song?.thumbnail}` },
                 color: hexToRgb(settings.colors.theme.blurple),
             }]
