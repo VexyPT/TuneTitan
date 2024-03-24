@@ -16,7 +16,6 @@ export default new Command({
     }],
     async run({ interaction, client }) {
 
-
         await interaction.deferReply({ ephemeral: false });
 
         const member = interaction.member as GuildMember;
